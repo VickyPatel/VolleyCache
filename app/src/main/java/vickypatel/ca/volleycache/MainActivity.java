@@ -1,6 +1,7 @@
 package vickypatel.ca.volleycache;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.Cache;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,6 +27,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         volleySingleton = new VolleySingleton(this);
         requestQueue = volleySingleton.getRequestQueue();
 
-        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, "http://jsonplaceholder.typicode.com/photos", new Response.Listener<JSONArray>() {
+        final JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, "https://api.github.com/users/mralexgray/repos", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 System.out.println(response.toString());
@@ -49,6 +53,25 @@ public class MainActivity extends AppCompatActivity {
                 Adapter adapter = new Adapter(MainActivity.this,response);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                 recyclerView.setAdapter(adapter);
+
+                Cache.Entry entry = requestQueue.getCache().get("0:https://api.github.com/users/mralexgray/repos");
+                String data = "";
+                if(entry!=null){
+                    try {
+                        data = new String(entry.data, "UTF-8");
+
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    // process data
+                }
+
+                System.out.println("from inside response call " + data);
+
+
+
+
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -57,15 +80,36 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        jsonObjectRequest.setTag("TAG");
         requestQueue.add(jsonObjectRequest);
+
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
+                System.out.println(" Cache Key " + jsonObjectRequest.getCacheKey());
+                System.out.println(" Another way " + jsonObjectRequest.getMethod() + ":" + "https://api.github.com/users/mralexgray/repos");
+                System.out.println(" Request TAG is " + jsonObjectRequest.getTag());
+
+                Cache.Entry entry = requestQueue.getCache().get(jsonObjectRequest.getCacheKey());
+                String data = "";
+                if(entry!=null){
+                    try {
+                        data = new String(entry.data, "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    // process data
+                }
+
+                System.out.println("from main Activity " + data);
+
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                intent.putExtra("data",data);
+                startActivity(intent);
             }
         });
     }
@@ -112,8 +156,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             try {
-                holder.textView.setText(jsonObject.getJSONObject(position).getString("id") + "  " +
-                        jsonObject.getJSONObject(position).getString("title"));
+                holder.textView.setText(jsonObject.getJSONObject(position).getString("name"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
