@@ -38,6 +38,9 @@ public class SecondActivity extends AppCompatActivity {
 
         System.out.println("feature data cache");
 
+
+        System.out.println("again added some data after push");
+
         TextView textView = (TextView) findViewById(R.id.text2);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
