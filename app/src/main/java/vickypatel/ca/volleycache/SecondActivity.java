@@ -25,7 +25,10 @@ public class SecondActivity extends AppCompatActivity {
         String data = getIntent().getStringExtra("data");
         System.out.println("hello");
         System.out.println(data + " data");
-        System.out.println("some more data added to check git branch");
+
+        System.out.println("some feature development");
+        System.out.println("some conflicted data here");
+
 
 
         System.out.println("some feature development");
