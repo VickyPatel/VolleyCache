@@ -27,6 +27,10 @@ public class SecondActivity extends AppCompatActivity {
         System.out.println(data + " data");
         System.out.println("some more data added to check git branch");
 
+
+        System.out.println("some feature development");
+
+
         TextView textView = (TextView) findViewById(R.id.text2);
 
 
