@@ -35,9 +35,7 @@ public class SecondActivity extends AppCompatActivity {
         System.out.println("Image cache feature 2 added");
         System.out.println("feature image cache done");
 
-
         System.out.println("feature data cache");
-
 
         System.out.println("again added some data after push");
 
