@@ -30,13 +30,10 @@ public class SecondActivity extends AppCompatActivity {
         System.out.println("some conflicted data here");
         System.out.println("some feature development");
         System.out.println("some feature 2 development");
-        System.out.println("some more commit data");
+        System.out.println("feature image cache done");
 
-        System.out.println("feature branch image cache");
 
         TextView textView = (TextView) findViewById(R.id.text2);
-
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
