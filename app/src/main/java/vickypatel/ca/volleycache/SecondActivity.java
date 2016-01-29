@@ -35,9 +35,12 @@ public class SecondActivity extends AppCompatActivity {
         System.out.println("some feature 2 development");
         System.out.println("feature image cache done");
 
+
+        System.out.println("feature Image cache");
+        System.out.println("Image cache feature 2 added");
+
+
         TextView textView = (TextView) findViewById(R.id.text2);
-
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
