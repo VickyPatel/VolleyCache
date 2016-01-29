@@ -23,20 +23,12 @@ public class SecondActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         String data = getIntent().getStringExtra("data");
-        System.out.println("hello");
-        System.out.println(data + " data");
-
-        System.out.println("some feature development");
-        System.out.println("some conflicted data here");
-        System.out.println("some feature development");
-        System.out.println("some feature 2 development");
-
-        System.out.println("feature Image cache");
-        System.out.println("Image cache feature 2 added");
-        System.out.println("feature image cache done");
 
 
-        System.out.println("feature data cache");
+        System.out.println("singleton object");
+
+
+
 
         TextView textView = (TextView) findViewById(R.id.text2);
 
