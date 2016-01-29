@@ -23,15 +23,7 @@ public class SecondActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         String data = getIntent().getStringExtra("data");
-
-
-        System.out.println("singleton object");
-
-
-
-
-
-        System.out.println("again added some data after push");
+        System.out.println("extra feature added");
 
         TextView textView = (TextView) findViewById(R.id.text2);
 
