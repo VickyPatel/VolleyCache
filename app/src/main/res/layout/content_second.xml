@@ -15,4 +15,37 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="18sp"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:maxHeight="100dp"
+        android:id="@+id/editText"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editText"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/ripple_background"
+        android:layout_alignParentEnd="true"/>
+
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/button_background"
+        android:layout_alignParentEnd="true"/>
+
+
+
 </RelativeLayout>
