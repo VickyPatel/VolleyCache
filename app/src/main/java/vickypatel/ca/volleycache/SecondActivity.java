@@ -24,12 +24,8 @@ public class SecondActivity extends AppCompatActivity {
 
         String data = getIntent().getStringExtra("data");
 
+        System.out.println("extra feature added");
 
-        System.out.println("singleton object");
-
-
-
-        System.out.println("again added some data after push");
 
         TextView textView = (TextView) findViewById(R.id.text2);
 
