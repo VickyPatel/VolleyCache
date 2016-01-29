@@ -35,9 +35,9 @@ public class SecondActivity extends AppCompatActivity {
         System.out.println("some feature 2 development");
         System.out.println("some more commit data");
 
+
+        System.out.println("feature Image cache");
         TextView textView = (TextView) findViewById(R.id.text2);
-
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
