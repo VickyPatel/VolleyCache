@@ -30,7 +30,7 @@ public class SecondActivity extends AppCompatActivity {
 
         System.out.println("some feature development");
         System.out.println("some feature 2 development");
-
+        System.out.println("some more commit data");
 
         TextView textView = (TextView) findViewById(R.id.text2);
 
