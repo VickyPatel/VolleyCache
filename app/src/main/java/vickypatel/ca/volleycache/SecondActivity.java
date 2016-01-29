@@ -29,6 +29,7 @@ public class SecondActivity extends AppCompatActivity {
 
 
         System.out.println("some feature development");
+        System.out.println("some feature 2 development");
 
 
         TextView textView = (TextView) findViewById(R.id.text2);
