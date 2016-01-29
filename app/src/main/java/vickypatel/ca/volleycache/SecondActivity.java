@@ -37,6 +37,9 @@ public class SecondActivity extends AppCompatActivity {
 
 
         System.out.println("feature Image cache");
+        System.out.println("Image cache feature 2 added");
+
+
         TextView textView = (TextView) findViewById(R.id.text2);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
