@@ -76,7 +76,13 @@ public class MainActivity extends AppCompatActivity {
 
 				System.out.println("branch_test added");
 				
+
 				System.out.println("broken feature");
+
+				System.out.println("branch_test 2 added");
+				
+				System.out.println("Cool branch is also done");
+
 
             }
         }, new Response.ErrorListener() {
