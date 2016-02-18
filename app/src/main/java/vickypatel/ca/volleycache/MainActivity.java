@@ -2,6 +2,7 @@ package vickypatel.ca.volleycache;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Cache;
@@ -21,6 +23,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 
@@ -34,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     VolleySingleton volleySingleton;
     RequestQueue requestQueue;
+    ImageLoader imageLoader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,19 +48,20 @@ public class MainActivity extends AppCompatActivity {
 
         volleySingleton = new VolleySingleton(this);
         requestQueue = volleySingleton.getRequestQueue();
+        imageLoader = volleySingleton.getImageLoader();
 
         final JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, "https://api.github.com/users/mralexgray/repos", new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 System.out.println(response.toString());
                 RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycleView);
-                Adapter adapter = new Adapter(MainActivity.this,response);
+                Adapter adapter = new Adapter(MainActivity.this, response);
                 recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
                 recyclerView.setAdapter(adapter);
 
                 Cache.Entry entry = requestQueue.getCache().get("0:https://api.github.com/users/mralexgray/repos");
                 String data = "";
-                if(entry!=null){
+                if (entry != null) {
                     try {
                         data = new String(entry.data, "UTF-8");
 
@@ -70,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 				System.out.println("branch_test added");
-				
 				
 				System.out.println("broken feature");
 
@@ -86,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
         requestQueue.add(jsonObjectRequest);
 
 
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Cache.Entry entry = requestQueue.getCache().get(jsonObjectRequest.getCacheKey());
                 String data = "";
-                if(entry!=null){
+                if (entry != null) {
                     try {
                         data = new String(entry.data, "UTF-8");
                     } catch (UnsupportedEncodingException e) {
@@ -110,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("from main Activity " + data);
 
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
-                intent.putExtra("data",data);
+                intent.putExtra("data", data);
                 startActivity(intent);
             }
         });
@@ -139,15 +142,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
+    public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         public Context context;
         public JSONArray jsonObject;
 
-        public Adapter(Context context, JSONArray jsonObject){
+        public Adapter(Context context, JSONArray jsonObject) {
             this.context = context;
             this.jsonObject = jsonObject;
+
+            System.out.println(jsonObject.length() + " total objects");
         }
 
         @Override
@@ -156,9 +160,45 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
+        public void onBindViewHolder(final ViewHolder holder, int position) {
             try {
-                holder.textView.setText(jsonObject.getJSONObject(position).getString("name"));
+
+
+                System.out.println(jsonObject.getJSONObject(position).getString("id"));
+                String id = jsonObject.getJSONObject(position).getString("id");
+                holder.textView.setText(id);
+
+
+//                imageLoader.get("http://dev.trainerpl.us/img/exercises/jpgs/" + position + ".jpg", new ImageLoader.ImageListener() {
+//                    @Override
+//                    public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+//                        holder.imageView.setImageBitmap(response.getBitmap());
+//                    }
+//
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//
+//                });
+
+                Cache.Entry entry = requestQueue.getCache().get("0:http://dev.trainerpl.us/img/exercises/jpgs/"+ position + ".jpg");
+                String data = "";
+                if (entry != null) {
+                    try {
+                        data = new String(entry.data, "UTF-8");
+
+                        System.out.println("image data " + data);
+
+                        holder.imageView.setImageBitmap(BitmapFactory.decodeByteArray(entry.data, 0, entry.data.length));
+
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    // process data
+                }
+
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -169,12 +209,15 @@ public class MainActivity extends AppCompatActivity {
             return jsonObject.length();
         }
 
-        public class ViewHolder extends RecyclerView.ViewHolder{
+        public class ViewHolder extends RecyclerView.ViewHolder {
 
             TextView textView;
+            ImageView imageView;
+
             public ViewHolder(View itemView) {
                 super(itemView);
                 textView = (TextView) itemView.findViewById(R.id.text);
+                imageView = (ImageView) itemView.findViewById(R.id.imageView);
             }
 
 
