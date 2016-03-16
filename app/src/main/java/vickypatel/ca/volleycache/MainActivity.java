@@ -85,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
 			System.out.println("new branch change");
 
+System.out.println("some change in master");
+
             }
         }, new Response.ErrorListener() {
             @Override
