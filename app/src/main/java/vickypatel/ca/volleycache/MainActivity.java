@@ -126,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
 
                 System.out.println("from main Activity " + data);
 
+ 		System.out.println("from main test" + data);
+ 		System.out.println("from main test" + data);
+
                 Intent intent = new Intent(MainActivity.this, SecondActivity.class);
                 intent.putExtra("data", data);
                 startActivity(intent);
